@@ -1,0 +1,37 @@
+{
+   "result_count" : 1,
+   "page_count" : 1,
+   "data" : [
+      {
+         "marc_enc_level" : "",
+         "subject_ids" : [],
+         "title" : "HAV: COMPRISING LAST LETTERS FROM HAV/HAV OF THE MYRMIDONS",
+         "author_data" : [
+            {
+               "name" : "Morris, Jan",
+               "id" : "morris_jan"
+            }
+         ],
+         "dewey_normal" : "0",
+         "title_long" : "",
+         "urls_text" : "",
+         "edition_info" : "",
+         "awards_text" : "",
+         "publisher_text" : "LONDON: FABER AND FABER, 2006.",
+         "language" : "eng",
+         "isbn10" : "0571229832",
+         "publisher_name" : "",
+         "publisher_id" : "",
+         "title_latin" : "HAV: COMPRISING LAST LETTERS FROM HAV/HAV OF THE MYRMIDONS",
+         "notes" : "",
+         "dewey_decimal" : "",
+         "isbn13" : "9780571229833",
+         "physical_description_text" : "",
+         "summary" : "",
+         "book_id" : "hav",
+         "lcc_number" : ""
+      }
+   ],
+   "current_page" : 1,
+   "index_searched" : "isbn"
+}

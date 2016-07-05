@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2015-12-19T20:36:38Z">
+<BookList total_results="1" page_size="10" page_number="1" shown_results="1">
+<BookData book_id="st_johns_wood_and_maida_vale_past" isbn="0948667532" isbn13="9780948667534">
+<Title>St John's Wood and Maida Vale past</Title>
+<TitleLong/>
+<AuthorsText>Richard Tames.</AuthorsText>
+<PublisherText publisher_id="historical_publications">New Barnet, Hertfordshire; Historical Publications</PublisherText>
+<Details change_time="2013-12-11T12:05:07Z" price_time="2015-12-19T20:36:38Z" edition_info="; " language="eng" physical_description_text="144 p. :" lcc_number="" dewey_decimal_normalized="942.132" dewey_decimal="942.132" />
+</BookData>
+</BookList>
+</ISBNdb>

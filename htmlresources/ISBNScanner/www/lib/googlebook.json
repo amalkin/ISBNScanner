@@ -1,0 +1,73 @@
+{
+    "kind": "books#volumes",
+    "totalItems": 1,
+    "items": [
+        {
+            "kind": "books#volume",
+            "id": "s55lAAAAMAAJ",
+            "etag": "Vd/lV1pJgVM",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/s55lAAAAMAAJ",
+            "volumeInfo": {
+                "title": "Hav",
+                "subtitle": "Comprising Last Letters from Hav, Hav of the Myrmidons",
+                "authors": [
+                    "Jan Morris"
+                ],
+                "publishedDate": "2006",
+                "description": "When the world's foremost travel writer describes the small city-state of Hav, it is unlike any of her other books. For Hav exists only in one special place -- Jan Morris's imagination. Hav gives us Jan Morris at her most delightful and most suggestive. The city is a magical place -- yet behind its arcane splendours are darker implications. The traditional Roof Race is peculiarly exciting, the waterfront is picturesque, the wistful call of a trumpeter from a distant rampart is wonderfully evocative, and every street corner is haunted by memories of illustrious visitors -- Freud, Diaghilev, Marco Polo, Lawrence of Arabia and countless others. But Morris's visit ends in flight when an unidentified enemy arrives to seize control. When Jan Morris returns to Hav, some twenty years later, she finds that her account of her earlier visit is banned -- and discovers a place that has rebuilt itself, transformed by a new energy and now dominated by a totemic tower 2000 feet tall. But as the old Hav was in many ways an allegory of the last century, so the city in its new incarnation offers no less elusive hints, echoes and portents of our 21st century world. As a destination it remains as entertaining as ever.",
+                "industryIdentifiers": [
+                    {
+                        "type": "OTHER",
+                        "identifier": "UOM:39015064708285"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 301,
+                "printType": "BOOK",
+                "categories": [
+                    "Allegories"
+                ],
+                "averageRating": 3.5,
+                "ratingsCount": 37,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.co.uk/books/content?id=s55lAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.co.uk/books/content?id=s55lAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.co.uk/books?id=s55lAAAAMAAJ&dq=isbn:9780571229833&hl=&cd=1&source=gbs_api",
+                "infoLink": "http://books.google.co.uk/books?id=s55lAAAAMAAJ&dq=isbn:9780571229833&hl=&source=gbs_api",
+                "canonicalVolumeLink": "http://books.google.co.uk/books/about/Hav.html?hl=&id=s55lAAAAMAAJ"
+            },
+            "saleInfo": {
+                "country": "GB",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "GB",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://books.google.co.uk/books/reader?id=s55lAAAAMAAJ&hl=&printsec=frontcover&output=reader&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "For Hav exists only in one special place -- Jan Morris&#39;s imagination. Hav gives us Jan Morris at her most delightful and most suggestive. The city is a magical place -- yet behind its arcane splendours are darker implications."
+            }
+        }
+    ]
+}
