@@ -1,12 +1,30 @@
-<ion-view view-title="Book scan">
+<ion-view view-title="Scan">
     
     <ion-content class="padding">
+        
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            refreshing-text="Loading..."
+            refreshing-icon="ion-loading-c"
+            pulling-icon="ion-ios7-arrow-thin-down"
+            on-refresh="doRefresh()">
+        </ion-refresher>
         
         <div class="list card">
             <div class="item item-body">
                 <div>
                     <button id="startScan" class="button button-block button-positive">
                         Start Scan
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="list card">
+            <div class="item item-body">
+                <div>
+                    <button id="startNFC" class="button button-block button-positive">
+                        Start NFC
                     </button>
                 </div>
             </div>

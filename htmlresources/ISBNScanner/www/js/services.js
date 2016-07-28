@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['firebase'])
 
 .factory('Chats', function() {
     // Might use a resource here that returns a JSON array
@@ -47,4 +47,12 @@ angular.module('starter.services', [])
             return null;
         }
     };
-});
+})
+
+.factory('Auth', Auth);
+
+function Auth(rootRef, $firebaseAuth) {
+    return $firebaseAuth(rootRef);
+}
+
+Auth.$inject = ['rootRef', '$firebaseAuth'];

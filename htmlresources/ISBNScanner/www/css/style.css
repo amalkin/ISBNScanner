@@ -1,1 +1,24 @@
 /* Empty. Add your own CSS if you like */
+
+* {
+    font-family: 'AdobeClean';
+    font-size: 5em;
+}
+
+body,
+.pane,
+.view {
+    background-color: #f3f0f8;
+    font-family: 'AdobeClean';
+    color: #545454;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'AdobeClean';
+    color: #545454;
+}

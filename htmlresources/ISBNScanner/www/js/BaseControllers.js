@@ -1,10 +1,120 @@
-angular.module('starter.controllers', [])
+var scanapp = angular.module('baseControllers', ['firebase'])
 
-.controller('ScanCtrl', function($scope, $http) {
+scanapp.constant('config', {
+    appName: 'ISBN Scanner',
+    appVersion: 2.0,
+    firebaseURL: 'https://am-books.firebaseio.com/',
+    googleISBNUrl: 'https://www.googleapis.com/books/v1/volumes?q=isbn:'
+})
 
-    console.log("[controllers.ScanCtrl] START")
+scanapp.factory('nfcService', function ($rootScope, $ionicPlatform) {
+
+    var tag = {};
+
+    return {
+        tag: tag,
+
+        clearTag: function () {
+            angular.copy({}, this.tag);
+        }
+    };
+})
+
+scanapp.factory("Items", function($firebaseArray) {
+    var itemsRef = new Firebase("https://am-books.firebaseio.com/");
+    return $firebaseArray(itemsRef);
+})
+
+scanapp.controller('AppCtrl', function($scope, $state, $http, nfcService, $timeout, $cordovaGeolocation, config, Auth) {
+
+    console.log("[controllers.AppCtrl] START");
+    
+    var mailgunUrl = "alastairmalkin.net";
+    var mailgunApiKey = window.btoa("api:key-359464dcffcf0d37fd1e8fcd0a776ccb")
+ 
+    $scope.sendEmail = function() {
+        $http(
+            {
+                "method": "POST",
+                "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+                "headers": {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": "Basic " + mailgunApiKey
+                },
+                data: "from=" + "test@example.com" + "&to=alastair.malkin@gmail.com&subject=Hey&text=Some text"
+            }
+        ).then(function(success) {
+            console.log("SUCCESS " + JSON.stringify(success)); 
+        }, function(error) {
+            console.log("ERROR " + JSON.stringify(error));
+        });
+    };
+    
+    $scope.isLoggedIn = false;
+    
+    $scope.loginFB = function (user) {
+        
+        console.log("[controllers.AppCtrl.loginFB] START");
+
+        Auth.$authWithOAuthPopup('facebook')
+        
+        .then(function(authData) {
+            console.log("[controllers.AppCtrl.loginFB] authData "+JSON.stringify(authData));
+            console.log("[controllers.AppCtrl.loginFB] name "+authData[authData.provider].displayName);
+            
+            $scope.isLoggedIn = true;
+            
+            $state.go('tab.scan');
+        });
+        
+    };
+    
+    $scope.logoutFB = function () {
+        
+        console.log("[controllers.AppCtrl.logoutFB] START");
+        
+        Auth.$unauth();
+        
+        $scope.isLoggedIn = false;
+        $state.go('tab.scan');
+    };
+    
+})
+
+scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, config) { 
+
+    console.log("[controllers.ScanCtrl] START");
     
     var firebaseURL = "https://am-books.firebaseio.com/"
+    var googleISBNUrl = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
+    
+    var resultISBN;
+    var resultDiv;
+    var resultISBNDiv;
+    
+    $scope.doRefresh = function() {
+        
+        console.log("[controllers.ScanCtrl] doRefresh");
+
+        //Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+        $scope.$apply();
+        
+    };
+    
+    var app = {
+        sampleDataIndex: 0,
+        initialize: function () {
+            this.bind();
+        },
+        bind: function () {
+            document.addEventListener('deviceready', app.deviceready, false);
+        },
+        deviceready: function () {
+            document.getElementById('checkbox').addEventListener('change', app.toggleCheckbox, false);
+            sample.addEventListener('click', app.showSampleData, false);
+        }
+    }
     
     if (window.ADB) {
         console.log("[controllers.ScanCtrl] Has ADB")
@@ -12,18 +122,153 @@ angular.module('starter.controllers', [])
         ADB.trackState("Scan" || "/home/scan/", {});
     }
     
-    var googleISBNUrl = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
     
-    var resultISBN;
-    var resultDiv;
-    var resultISBNDiv;
     
-    document.addEventListener("deviceready", init, false);
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+        document.addEventListener("deviceready", init, false);
+    } else {
+        //init();
+    }
+    
     function init() {
         console.log("[controllers.ScanCtrl.init] deviceready init")
         document.querySelector("#startScan").addEventListener("touchend", startScan, false);
+        document.querySelector("#startNFC").addEventListener("touchend", startNFC, false);
         resultDiv = document.querySelector("#results");
-        console.log("[controllers.ScanCtrl.init] resultISBN: "+resultISBN)
+        console.log("[controllers.ScanCtrl.init] resultISBN: "+resultISBN);
+        
+        if(navigator.network.connection.type == Connection.NONE){
+            console.log("[controllers.ScanCtrl.init] network NONE")
+        }
+        else {
+            console.log("[controllers.ScanCtrl.init] network OK");
+            
+            startTracking();
+        }
+        
+    }
+    
+    function startTracking() {
+        
+        console.log("[controllers.ScanCtrl.startTracking] network OK");
+        
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 0
+        };
+        
+        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+            var lat  = position.coords.latitude;
+            var lgt = position.coords.longitude;
+            
+            console.log("[controllers.ScanCtrl.startTracking] lat/lgt: "+lat+" / "+lgt);
+            
+        });
+        
+    }
+    
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+        'message: ' + error.message + '\n');
+    }
+    
+    function startNFC() {
+        
+        console.log("[controllers.ScanCtrl] startNFC")
+        
+        nfc.addNdefListener (
+            function (nfcEvent) {
+                var tag = nfcEvent.tag,
+                    ndefMessageJSON = tag.ndefMessage,
+                    ndefMessage;
+
+                // dump the raw json of the message
+                // note: real code will need to decode
+                // the payload from each record
+                console.log("[controllers.ScanCtrl.addNdefListener] ndefMessageJSON: "+JSON.stringify(ndefMessageJSON));
+                
+                ndefMessage = nfc.bytesToString(ndefMessageJSON[0].payload).substring(3);
+                console.log("[controllers.ScanCtrl.addNdefListener] ndefMessage: "+ndefMessage);
+                
+                if (ndefMessage.includes("Orange")) {
+                    console.log("[controllers.ScanCtrl.addNdefListener] ndefMessage Orange: "+ndefMessage);
+                }
+                
+                
+                // assuming the first record in the message has
+                // a payload that can be converted to a string.
+                alert(nfc.bytesToString(ndefMessageJSON[0].payload).substring(3));
+            },
+            function () { // success callback
+                 alert("Waiting for NDEF tag");
+            },
+            function (error) { // error callback
+                 console.log("Error adding NDEF listener " + JSON.stringify(error));
+            }
+        );
+        
+        nfc.addTagDiscoveredListener(writeNFCTag, successWriteNFC, failWriteNFC);
+        
+    }
+    
+    function writeTag(writeNFCTag) {
+        
+        console.log("[controllers.ScanCtrl] successWriteNFC");
+        
+        var message = "I'm in Germany";
+        
+        nfc.write(
+            message, 
+            function () {
+                console.log("[controllers.ScanCtrl] successWriteNFC");
+            }, 
+            function (reason) {
+                
+            }
+        );
+
+        
+    }
+    
+    function successWriteNFC() {
+        
+        console.log("[controllers.ScanCtrl] successWriteNFC");
+        
+        
+    }
+    
+    function failWriteNFC() {
+        
+        console.log("[controllers.ScanCtrl] failWriteNFC");
+        
+        
+    }
+    
+    function writeTag(nfcEvent) {
+        
+        console.log("[controllers.ScanCtrl] writeTag");
+        
+        var mimeType = "Mime", //document.forms[0].elements["mimeType"].value,
+            payload = "Some text", //document.forms[0].elements["payload"].value,
+            record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
+        
+    }
+    
+    function startNFCReader() {
+        
+        console.log("[controllers.ScanCtrl] startNFC");
+        
+        function win() {
+            console.log("Listening for NDEF tags");
+        }
+
+        function fail() {
+            alert('Failed to register NFC Listener');
+        }
+
+        nfc.addTagDiscoveredListener(writeTag, win, fail);
+        
     }
     
     function startScan() {
@@ -231,7 +476,7 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('DashCtrl', function($scope, $http) {
+scanapp.controller('DashCtrl', function($scope, $http) {
     
     var isbnAccessKey = "3XEHXAJR";
     
@@ -350,8 +595,37 @@ angular.module('starter.controllers', [])
     function init() {
         console.log("[controllers.DashCtrl] deviceready init")
         document.querySelector("#startScan").addEventListener("touchend", startScan, false);
+        document.querySelector("#startNFC").addEventListener("touchend", startNFC, false);
         resultDiv = document.querySelector("#results");
         console.log("[controllers.DashCtrl] resultISBN: "+resultISBN)
+    }
+    
+    function startNFC() {
+        
+        console.log("[controllers.DashCtrl] startNFC")
+        
+        nfc.addNdefListener (
+            function (nfcEvent) {
+                var tag = nfcEvent.tag,
+                    ndefMessage = tag.ndefMessage;
+
+                // dump the raw json of the message
+                // note: real code will need to decode
+                // the payload from each record
+                 console.log(JSON.stringify(ndefMessage));
+
+                // assuming the first record in the message has
+                // a payload that can be converted to a string.
+                 console.log(nfc.bytesToString(ndefMessage[0].payload).substring(3));
+            },
+            function () { // success callback
+                 console.log("Waiting for NDEF tag");
+            },
+            function (error) { // error callback
+                 console.log("Error adding NDEF listener " + JSON.stringify(error));
+            }
+        );
+        
     }
     
     function startScan() {
@@ -427,24 +701,48 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+scanapp.controller('ChatsCtrl', function($scope, Chats) {
     $scope.chats = Chats.all();
     $scope.remove = function(chat) {
         Chats.remove(chat);
     };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+scanapp.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
+scanapp.controller('AccountCtrl', function($scope, config, AdobeCampaignService) {
+    
+    console.log("[controllers.AccountCtrl] Start: ")
+    
     $scope.settings = {
-        enableFriends: true
+        enableFriends: true,
+        enableNotifications: true
     };
-})
-
-.factory("Items", function($firebaseArray) {
-    var itemsRef = new Firebase("https://am-books.firebaseio.com/");
-    return $firebaseArray(itemsRef);
+    
+    document.querySelector("#saveFirebaseURL").addEventListener("touchend", saveFirebaseURL, false);
+    
+    function saveFirebaseURL() {
+        
+        console.log("[controllers.AccountCtrl] saveFirebaseURL")
+        
+    }
+    
+    $scope.saveFirebaseURL = function(settings) {
+        console.log("[controllers.AccountCtrl] saveFirebaseURL: "+settings.firebaseURL)
+        console.log("[controllers.AccountCtrl] saveFirebaseURL: "+config.firebaseURL)
+    }
+    
+    $scope.toggleChange = function() {
+        var value = $scope.settings.enableNotifications;
+        console.log('EnableNotifications ' + value);
+        
+        if(value == true){
+            //AdobeCampaignService.registerNotifications();
+        }else{
+            //AdobeCampaignService.unregisterNotifications();
+        }
+     };
+    
 });

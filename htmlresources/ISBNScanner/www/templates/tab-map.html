@@ -1,0 +1,39 @@
+<ion-view view-title="Map tracking">
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <!-- Toggle right side menu -->
+            <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    
+    <ion-content class="padding">
+        
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            refreshing-text="Loading..."
+            refreshing-icon="ion-loading-c"
+            pulling-icon="ion-ios7-arrow-thin-down"
+            on-refresh="doRefresh()">
+        </ion-refresher>
+        
+        <div class="list card">
+            <div class="item item-body">
+                <div>
+                    <button id="startScan" class="button button-block button-positive">
+                        Map
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        
+    </ion-content>
+</ion-view>

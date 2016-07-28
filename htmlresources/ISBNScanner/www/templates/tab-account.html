@@ -1,9 +1,25 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        
+        <ion-list>
+            <ion-toggle ng-model="settings.enableFriends">
+                Enable Friends
+            </ion-toggle>
+            
+            <div class="item item-input-inset" ng-form="settingsfirebaseURL">
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="settings.firebaseURL" placeholder="Firebase URL">
+                </label>
+                <button id="saveFirebaseURL" ng-click="saveFirebaseURL(settings)" ng-disabled="settingsfirebaseURL.$invalid" class="button button-small">
+                    Submit
+                </button>
+            </div>
+            
+            <ion-toggle ng-model="settings.enableNotifications" ng-change="toggleChange()">
+                Push Notifications
+            </ion-toggle>
+
+        </ion-list>
+        
+    </ion-content>
 </ion-view>
