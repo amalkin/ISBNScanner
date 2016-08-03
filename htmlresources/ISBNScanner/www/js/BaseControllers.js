@@ -29,6 +29,8 @@ scanapp.controller('AppCtrl', function($scope, $state, $http, nfcService, $timeo
 
     console.log("[controllers.AppCtrl] START");
     
+    $scope.navTitle='<img class="title-image" src="img/wave01.jpg" />';
+    
     var mailgunUrl = "alastairmalkin.net";
     var mailgunApiKey = window.btoa("api:key-359464dcffcf0d37fd1e8fcd0a776ccb")
  
@@ -81,7 +83,7 @@ scanapp.controller('AppCtrl', function($scope, $state, $http, nfcService, $timeo
     
 })
 
-scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, config) { 
+scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, config, Auth, $window) { 
 
     console.log("[controllers.ScanCtrl] START");
     
@@ -95,10 +97,23 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
     $scope.doRefresh = function() {
         
         console.log("[controllers.ScanCtrl] doRefresh");
+        
+        Auth.$unauth();
+        
+        Auth.$onAuth(function(authData) {
+            if (authData === null) {
+                console.log("Not logged in yet");
+            } else {
+                console.log("Logged in as", authData.uid);
+            }
+            $scope.authData = authData; // This will display the user's name in our view
+        });
 
         //Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
         $scope.$apply();
+        
+        $window.location.reload(true)
         
     };
     
@@ -271,6 +286,8 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
         
     }
     
+    $scope.showBook = false;
+    
     function startScan() {
         
         console.log("[controllers.DashCtrl] startScan")
@@ -282,6 +299,8 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
                 resultDiv.innerHTML = s;
                 resultISBN = result.text;
                 console.log("[controllers.ScanCtrl] resultISBN: "+resultISBN)
+                
+                $scope.showBook = true;
                 
                 $http({method: 'GET', url: googleISBNUrl+resultISBN}).success(function(data) {
                     $scope.bookdetails = [];
@@ -361,6 +380,13 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
             },
             function (error) {
                 alert("Scanning failed: " + error);
+            },
+            {
+                "preferFrontCamera" : true, // iOS and Android
+                "showFlipCameraButton" : true, // iOS and Android
+                "prompt" : "Place a barcode inside the scan area", // supported on Android only
+                //"formats" : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+                "orientation" : "landscape" // Android only (portrait|landscape), default unset so it rotates with the device
             }
         );
 

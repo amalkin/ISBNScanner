@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('starter', ['ionic', 'baseControllers', 'cqMapCtrl', 'ngAdobeCampaign', 'starter.services', 'firebase', 'ngCordova'])
+angular.module('starter', ['ionic', 'baseControllers', 'cqHomeCtrl', 'cqMapCtrl', 'ngAdobeCampaign', 'starter.services', 'firebase', 'ngCordova'])
 
 .constant('FirebaseUrl', 'https://am-books.firebaseio.com/')
 
@@ -85,6 +85,16 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html'
+    })
+
+    .state('tab.home', {
+        url: '/home',
+        views: {
+            'tab-home': {
+                templateUrl: 'templates/tab-home.html',
+                controller: 'HomeCtrl'
+            }
+        }
     })
 
     .state('tab.scan', {

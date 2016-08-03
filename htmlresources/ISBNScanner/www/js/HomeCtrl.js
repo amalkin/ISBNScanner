@@ -1,8 +1,8 @@
-var scanapp = angular.module('cqMapCtrl', [])
+var scanapp = angular.module('cqHomeCtrl', [])
 
-scanapp.controller('MapCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, $firebase, Auth) { 
+scanapp.controller('HomeCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, $firebase, Auth) { 
     
-    console.log("[controllers.MapCtrl] START");
+    console.log("[controllers.HomeCtrl] START");
     
     Auth.$onAuth(function(authData) {
         if (authData === null) {
