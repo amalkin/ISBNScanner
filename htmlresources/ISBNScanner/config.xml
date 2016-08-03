@@ -47,13 +47,17 @@
     <plugin name="cordova-plugin-network-information" spec="~1.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     
+    <!--
     <plugin name="phonegap-nfc" spec="~0.6.6" />
+    -->
     
-    <plugin name="adobe-mobile-services" spec="4.7.0" />
+    <plugin name="adobe-mobile-services" spec="^4.7.0" />
     
     <plugin name="phonegap-plugin-barcodescanner" spec="5.0.1"/>
     
     <plugin name="com.unarin.cordova.beacon" spec="https://github.com/petermetz/cordova-plugin-ibeacon.git" />
+    
+    <plugin name="cordova-plugin-apple-watch" spec="https://github.com/leecrossley/cordova-plugin-apple-watch.git" />
     
     <!--
     DONE
