@@ -20,7 +20,7 @@ scanapp.factory('nfcService', function ($rootScope, $ionicPlatform) {
     };
 })
 
-scanapp.factory("Items", function($firebaseArray) {
+scanapp.factory("ItemsOLD", function($firebaseArray) {
     var itemsRef = new Firebase("https://am-books.firebaseio.com/");
     return $firebaseArray(itemsRef);
 })
@@ -136,6 +136,46 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
         // Track using trackingTitle, falling back to path if unavailable
         ADB.trackState("Scan" || "/home/scan/", {});
     }
+    
+    
+    
+    
+    $scope.settings = {
+        
+    };
+    
+    document.querySelector("#saveFirebaseURL").addEventListener("touchend", saveFirebaseURL, false);
+    
+    function saveFirebaseURL() {
+        
+        console.log("[controllers.AccountCtrl] saveFirebaseURL")
+        
+    }
+    
+    $scope.saveFirebaseURL = function(settings) {
+        console.log("[controllers.AccountCtrl] saveFirebaseURL: "+settings.firebaseURL)
+        console.log("[controllers.AccountCtrl] saveFirebaseURL: "+config.firebaseURL)
+    }
+    
+    
+    
+    
+    $scope.search = {
+        
+    };
+    
+    document.querySelector("#searchISBN").addEventListener("touchend", searchISBN, false);
+    
+    function searchISBN() {
+        
+        console.log("[controllers.ScanCtrl] searchISBN")
+        
+    }
+    
+    $scope.searchISBN = function(search) {
+        console.log("[controllers.ScanCtrl] searchISBN: "+search.searchISBN)
+    }
+    
     
     
     
@@ -290,7 +330,7 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
     
     function startScan() {
         
-        console.log("[controllers.DashCtrl] startScan")
+        console.log("[controllers.ScanCtrl] startScan")
 
         cordova.plugins.barcodeScanner.scan(
             function (result) {
@@ -299,6 +339,7 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
                 resultDiv.innerHTML = s;
                 resultISBN = result.text;
                 console.log("[controllers.ScanCtrl] resultISBN: "+resultISBN)
+                console.log("[controllers.ScanCtrl] url: "+googleISBNUrl+resultISBN)
                 
                 $scope.showBook = true;
                 
@@ -392,67 +433,71 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
 
     }
     
-    $http({method: 'GET', url: '../lib/googlebook.json'}).success(function(data) {
-        $scope.bookdetails = [];
-        console.log("[controllers.myFunction] length: "+data.items.length)
-        for ( var i = 0; i < data.items.length; i++) {
-            var obj = data.items[i];
-            console.log(obj);
-            
-            var bookTitle, bookSubTitle, bookAuthor, bookImage
+    function testInit() {
+    
+        $http({method: 'GET', url: '../lib/googlebook.json'}).success(function(data) {
+            $scope.bookdetails = [];
+            console.log("[controllers.myFunction] length: "+data.items.length)
+            for ( var i = 0; i < data.items.length; i++) {
+                var obj = data.items[i];
+                console.log(obj);
 
-            angular.forEach(obj.volumeInfo, function(value, key) {
-                console.log("[controllers.myFunction] volumeInfo forEach: "+key+" - "+value)
-                
-                if (key == "title") { 
-                    bookTitle = value
-                    console.log("[controllers.myFunction] volumeInfo bookTitle: "+bookTitle)
-                }
-                if (key == "subtitle") { 
-                    bookSubTitle = value
-                    console.log("[controllers.myFunction] volumeInfo bookSubTitle: "+bookSubTitle)
-                }
-                if (key == "authors") { 
-                    bookAuthor = value
-                    console.log("[controllers.myFunction] volumeInfo bookSubTitle: "+bookAuthor)
-                }
-                
-            });
-            
-            angular.forEach(obj.volumeInfo.imageLinks, function(value, key) {
-                console.log("[controllers.myFunction] volumeInfo.imageLinks forEach: "+key+" - "+value)
-                if (key == "smallThumbnail") { 
-                    bookImage = value
-                    console.log("[controllers.myFunction] volumeInfo bookImage: "+bookImage)
-                }
-            });
-            
-            var bookImageDetails = "<img src='"+bookImage+"'>";
-            document.getElementById("resultsISBNImage").innerHTML = bookImageDetails;
-            
-            var bookDetails = "<h2>" + bookTitle + "</h2>" +
-            "<p>" + bookSubTitle + "<br /><strong>" + bookAuthor + "</strong></p>";
-            document.getElementById("resultsISBN").innerHTML = bookDetails;
+                var bookTitle, bookSubTitle, bookAuthor, bookImage
 
-            var bookKey, bookValue
-            for ( var key in obj) {
-                bookKey = key;
-                bookValue = obj[key].toString();
-                console.log("key: "+bookKey);
-                console.log("value: "+bookValue);
+                angular.forEach(obj.volumeInfo, function(value, key) {
+                    console.log("[controllers.myFunction] volumeInfo forEach: "+key+" - "+value)
+
+                    if (key == "title") { 
+                        bookTitle = value
+                        console.log("[controllers.myFunction] volumeInfo bookTitle: "+bookTitle)
+                    }
+                    if (key == "subtitle") { 
+                        bookSubTitle = value
+                        console.log("[controllers.myFunction] volumeInfo bookSubTitle: "+bookSubTitle)
+                    }
+                    if (key == "authors") { 
+                        bookAuthor = value
+                        console.log("[controllers.myFunction] volumeInfo bookSubTitle: "+bookAuthor)
+                    }
+
+                });
+
+                angular.forEach(obj.volumeInfo.imageLinks, function(value, key) {
+                    console.log("[controllers.myFunction] volumeInfo.imageLinks forEach: "+key+" - "+value)
+                    if (key == "smallThumbnail") { 
+                        bookImage = value
+                        console.log("[controllers.myFunction] volumeInfo bookImage: "+bookImage)
+                    }
+                });
+
+                var bookImageDetails = "<img src='"+bookImage+"'>";
+                document.getElementById("resultsISBNImage").innerHTML = bookImageDetails;
+
+                var bookDetails = "<h2>" + bookTitle + "</h2>" +
+                "<p>" + bookSubTitle + "<br /><strong>" + bookAuthor + "</strong></p>";
+                document.getElementById("resultsISBN").innerHTML = bookDetails;
+
+                var bookKey, bookValue
+                for ( var key in obj) {
+                    bookKey = key;
+                    bookValue = obj[key].toString();
+                    console.log("key: "+bookKey);
+                    console.log("value: "+bookValue);
+                }
             }
-        }
-        angular.forEach(data.items, function(value, key) {
-            console.log("[controllers.myFunction] forEach: "+value)
+            angular.forEach(data.items, function(value, key) {
+                console.log("[controllers.myFunction] forEach: "+value)
+            });
+            $scope.isVisible = function(name){
+                return true;// return false to hide this artist's albums
+            };
         });
-        $scope.isVisible = function(name){
-            return true;// return false to hide this artist's albums
-        };
-    });
+        
+    }
     
 })
 
-.controller('BooksCtrl', function($scope, $http, Items) {
+scanapp.controller('BooksCtrlOLD', function($scope, $http, Items) {
 
     console.log("[controllers.BooksCtrl] START")
     
@@ -463,6 +508,25 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
     }
     
     $scope.items = Items;
+    
+    
+    
+    $scope.removeBook = function(item) {
+        
+        console.log("[controllers.BooksCtrl] removeBook "+item.isbn);
+        
+        var bookRef = new Firebase('https://am-books.firebaseio.com/9780099272779');
+        
+        var onComplete = function(error) {
+            if (error) {
+                console.log('Synchronization failed');
+            } else {
+                console.log('Synchronization succeeded');
+            }
+        };
+        bookRef.remove(onComplete);
+        
+    };
     
     //$scope.addItem = function() {
     //    $scope.items.$add({
@@ -502,7 +566,7 @@ scanapp.controller('ScanCtrl', function($scope, $http, nfcService, $timeout, $co
     
 })
 
-scanapp.controller('DashCtrl', function($scope, $http) {
+scanapp.controller('ScanCtrlOLD', function($scope, $http) {
     
     var isbnAccessKey = "3XEHXAJR";
     

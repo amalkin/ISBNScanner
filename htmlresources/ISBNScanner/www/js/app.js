@@ -6,7 +6,20 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('starter', ['ionic', 'baseControllers', 'cqHomeCtrl', 'cqMapCtrl', 'ngAdobeCampaign', 'starter.services', 'firebase', 'ngCordova'])
+var scanapp = angular.module('starter', [
+    'ionic', 
+    'baseControllers', 
+    'cqHomeCtrl', 
+    'cqMapCtrl', 
+    'formly', 
+    'cqAccountCtrl', 
+    'ngAdobeCampaign', 
+    'starter.services', 
+    'firebase', 
+    'ionic.utils',
+    'ngCordova', 
+    'ngISBNService'
+])
 
 .constant('FirebaseUrl', 'https://am-books.firebaseio.com/')
 
@@ -102,7 +115,7 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         views: {
             'tab-scan': {
                 templateUrl: 'templates/tab-scan.html',
-                controller: 'ScanCtrl'
+                controller: 'ISBNScanCtrl'
             }
         }
     })
@@ -160,6 +173,16 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         }
     })
     
+    .state('app.preferences', {
+        url: '/preferences',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/tab-preferences.html',
+                controller: 'PreferencesCtrl'
+            }
+        }
+    })
+    
     
     
     
@@ -169,8 +192,8 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         url: '/dash',
         views: {
             'tab-dash': {
-                templateUrl: 'templates/tab-dash.html',
-                controller: 'DashCtrl'
+                templateUrl: 'templates/tab-scan.html',
+                controller: 'ScanCtrl'
             }
         }
     })

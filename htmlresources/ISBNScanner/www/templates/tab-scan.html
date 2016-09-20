@@ -14,7 +14,7 @@
             <div class="item item-body">
                 <div>
                     <button id="startScan" class="button button-block button-positive">
-                        Start Scan
+                        Start ISBN Scan
                     </button>
                 </div>
             </div>
@@ -29,6 +29,26 @@
                 </div>
             </div>
         </div>
+        
+        <ion-list>
+            <form name="formTest">
+                <formly-form model="scanpreferences.model" fields="scanpreferences.fields" form="scanpreferences.form" options="scanpreferences.options">
+
+                </formly-form>
+            </form>
+        </ion-list>
+        
+        <script type="text/ng-template" id="isbnscan.html">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="{{to.placeholder}}" ng-model="model.options.key">
+                </label>
+                <button class="button button-small" ng-click="btnClick();">
+                    {{toggleBtnLabel}}
+                </button>
+            </div>
+        </script>
+
         
         <div ng-show='showBook' class="list card">
             <div class="item item-divider">Book</div>
