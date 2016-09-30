@@ -67,22 +67,10 @@ scanapp.controller('ISBNScanCtrl', function($scope, $rootScope, $q, PreferencesS
         var firebase = preferences["firebase"];
         
         if (isbnValue && isbnValue != null && isbnValue != "") {
-            ISBNScanService.googleBookImage(isbnValue).then(
-                function (response) {
-                    console.log("googleBookImage: "+response);
-                    
-                    var FBBookUserRef = new Firebase(firebase + isbnValue);
-                    FBBookUserRef.set({ isbn: isbnValue, bookImage: response });
-                    
-                },
-                function (error) {
-                    // handle errors here
-                    console.error(error);
-                    deferred.reject(false);
-                }
-            );
             
             addISBN(isbnValue);
+            
+            addISBNImage(isbnValue);
             
         } else {
             alert("ISBN url is empty!!!");
@@ -111,6 +99,33 @@ scanapp.controller('ISBNScanCtrl', function($scope, $rootScope, $q, PreferencesS
             
             startTracking();
         }
+        
+    }
+    
+    function addISBNImage(isbnValue) {
+        var deferred = $q.defer();
+        
+        console.log("[controllers.ScanCtrl.addISBNImage] START");
+
+        var preferences = PreferencesService.getPreferences();
+        var firebase = preferences["firebase"];
+        
+        ISBNScanService.googleBookImage(isbnValue).then(
+            function (response) {
+                console.log("googleBookImage: "+response);
+                
+                console.log("googleBookImage: "+firebase + isbnValue);
+
+                var FBBookUserRef = new Firebase(firebase + isbnValue);
+                FBBookUserRef.update({ bookImage: response });
+
+            },
+            function (error) {
+                // handle errors here
+                console.error(error);
+                deferred.reject(false);
+            }
+        );
         
     }
     

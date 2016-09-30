@@ -10,14 +10,18 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/flag.css" rel="stylesheet">
     <link href="fonts/stylesheet.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
+    
+    <script src="lib/jquery/dist/jquery.min.js"></script>
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic/js/ionic.io.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -50,6 +54,11 @@
     <!-- Scan -->
     <script src="js/isbn-scan/ISBNScanController.js"></script>
     <script src="js/isbn-scan/ISBNScanService.js"></script>
+    
+    <!-- Currency Converter -->
+    <script src="lib/money.min.js"></script>
+    <script src="js/currencyconverter/CurrencyConverterCtrl.js"></script>
+    <script src="js/currencyconverter/CountryDataService.js"></script>
     
     <!-- Book -->
     <script src="js/books/BooksController.js"></script>

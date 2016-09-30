@@ -1,0 +1,56 @@
+<ion-view view-title="Currency Converter">
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <!-- Toggle right side menu -->
+            <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    
+    <ion-content class="padding">
+        
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            refreshing-text="Loading..."
+            refreshing-icon="ion-loading-c"
+            pulling-icon="ion-ios7-arrow-thin-down"
+            on-refresh="doRefresh()">
+        </ion-refresher>
+        
+        <div class="list card">
+            <div class="item item-body">
+                <div>
+                    Currency Converter
+                </div>
+            </div>
+        </div>
+        
+        <label class="item item-input">
+            <div id="country_fromFlag"></div>
+            <div id="country_fromCurrency"></div>
+            <input type="text" id="country_from" ng-name="country_from" placeholder="Country From" ng-change="searchA()" ng-model="data.searchA" style="font-size: 17px; color: #444; border-bottom: 1px solid #c6c6c5;" />
+            <input ng-show='showAmountFrom' type="text" id="country_from_amount" ng-name="country_from" placeholder="Amount" style="font-size: 17px; color: #444; border-bottom: 0px solid #c6c6c5;" />
+        </label>  
+        <div class="list" id="countryFrom">
+            <li class="item " ng-click="selectedCountryFrom(countryA)" ng-repeat="countryA in data.countriesA" ><span class="flag flag-{{countryA.flag}}"></span>{{countryA.name}}</li>
+        </div>
+
+        <label class="item item-input">
+            <div id="country_toFlag"></div>
+            <input type="text" id="country_to" ng-name= "country_to" placeholder="Country To" ng-change="searchB()" ng-model="data.searchB" style=" font-size: 17px; color: #444; border-bottom: 1px solid #c6c6c5;"/>
+            <input ng-show='showAmountTo' type="text" id="country_from_amount" ng-name="country_from" placeholder="Amount" style="font-size: 17px; color: #444; border-bottom: 0px solid #c6c6c5;" />
+        </label>  
+        <div class="list" id="countryTo">
+            <li class="item" ng-click="selectedCountryTo(countryB)" ng-repeat="countryB in data.countriesB"><span class="flag flag-{{countryB.flag}}"></span>{{countryB.name}}</li>
+        </div>
+        
+        
+    </ion-content>
+</ion-view>

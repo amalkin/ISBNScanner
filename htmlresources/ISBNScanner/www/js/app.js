@@ -18,7 +18,9 @@ var scanapp = angular.module('starter', [
     'firebase', 
     'ionic.utils',
     'ngCordova', 
-    'ngISBNService'
+    'ngISBNService',
+    'cqCurrencyConverterCtrl',
+    'ngCountryDataService'
 ])
 
 .constant('FirebaseUrl', 'https://am-books.firebaseio.com/')
@@ -179,6 +181,16 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
             'menuContent': {
                 templateUrl: 'templates/tab-preferences.html',
                 controller: 'PreferencesCtrl'
+            }
+        }
+    })
+    
+    .state('app.currencyconverter', {
+        url: '/currencyconverter',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/tab-currencyconverter.html',
+                controller: 'CurrencyConverterCtrl'
             }
         }
     })
