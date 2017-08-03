@@ -14,7 +14,7 @@
 
     <ion-side-menu side="left">
         <ion-header-bar class="bar-stable">
-            <h1 class="title">Left</h1>
+            <h1 class="title">&nbsp</h1>
         </ion-header-bar>
         <ion-content>
             <ion-list>
@@ -27,11 +27,19 @@
                 <ion-item menu-close href="#/app/search">
                     Map Status
                 </ion-item>
-                <ion-item menu-close href="#/app/currencyconverter">
+                <ion-item menu-close href="#/app/tab/ble">
+                    Bluetooth
+                </ion-item>
+                <ion-item menu-close href="#/app/tab/currencyconverter">
                     Currency Converter
                 </ion-item>
-                <ion-item menu-close href="#/app/trackitem">
-                    Track an item
+                <ion-item item-type="item-icon-right" menu-close ui-sref="app.tab.tides.now">
+                    <i class="icon ion-waterdrop"></i>
+                    Tides
+                </ion-item>
+                <ion-item item-type="item-icon-right" menu-close href="#/app/tab/weather">
+                    <i class="icon ion-flash"></i>
+                    Weather
                 </ion-item>
             </ion-list>
         </ion-content>

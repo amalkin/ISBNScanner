@@ -19,7 +19,53 @@
         </div>
         
         
-        
+        <div id="footerTargetMessage" ng-show="showTargetMessage">Footer - Just scroll...</div>
+
+        <div id="someone-purchased" class="customized fade-out" style="margin-left: 0px; display: block;">
+            <img src="https://cdn.shopify.com/s/files/1/1299/3113/products/DSC09466_small.png?v=1499160502">
+            <p>Jon in Stockholm, Sweden purchased a <a href="http://phonebibi.com/products/magic-toy-truck?variant=42676518726&amp;utm_source=fomo&amp;utm_medium=notification" target="_blank">Magic Toy Truck</a> <small></small></p>
+            <span id="fomo-close"></span>
+        </div>
+
         
     </ion-content>
 </ion-view>
+
+<style>
+
+
+#footerTargetMessage {
+    position: fixed;
+    bottom: 40px;
+    width: 50%;
+}
+
+#someone-purchased.fade-out {
+    opacity: 0;
+    animation-name: nFadeOut;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+#someone-purchased {
+    padding-right: 25px;
+}
+#someone-purchased {
+    background: #fff;
+    border: 0;
+    display: none;
+    border-radius: 0;
+    bottom: 20px;
+    left: 20px;
+    top: auto !important;
+    right: auto !important;
+    padding: 0;
+    position: fixed;
+    text-align: left;
+    width: auto;
+    z-index: 99999;
+    font-family: Raleway,sans-serif;
+    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
+    -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
+}
+</style>

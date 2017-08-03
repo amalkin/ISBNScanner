@@ -3,6 +3,8 @@ var scanapp = angular.module('cqHomeCtrl', [])
 scanapp.controller('HomeCtrl', function($scope, $http, nfcService, $timeout, $cordovaGeolocation, $firebase, Auth) { 
     
     console.log("[controllers.HomeCtrl] START");
+
+    $scope.showTargetMessage = true;
     
     Auth.$onAuth(function(authData) {
         if (authData === null) {

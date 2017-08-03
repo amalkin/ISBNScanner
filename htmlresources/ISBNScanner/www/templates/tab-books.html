@@ -2,7 +2,7 @@
 
     <ion-content>
         <ion-list id="listBooks">
-            <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" ng-repeat="item in items" href="#">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" ng-repeat="item in items" href="#/app/tab/books/{{item.isbn}}">
                 <img ng-src="{{item.bookImage}}">
                 <h2>{{item.isbn}}</h2>
                 <p>{{item.title}}</p>

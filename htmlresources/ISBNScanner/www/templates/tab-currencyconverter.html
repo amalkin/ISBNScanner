@@ -33,6 +33,7 @@
         </div>
         
         <label class="item item-input">
+            <span class="input-label" style="width:20px"><b>Convert </b></span>
             <div id="country_fromFlag"></div>
             <div id="country_fromCurrency"></div>
             <input type="text" id="country_from" ng-name="country_from" placeholder="Country From" ng-change="searchA()" ng-model="data.searchA" style="font-size: 17px; color: #444; border-bottom: 1px solid #c6c6c5;" />
@@ -43,6 +44,7 @@
         </div>
 
         <label class="item item-input">
+            <span class="input-label" style="width:20px"><b>To </b></span>
             <div id="country_toFlag"></div>
             <input type="text" id="country_to" ng-name= "country_to" placeholder="Country To" ng-change="searchB()" ng-model="data.searchB" style=" font-size: 17px; color: #444; border-bottom: 1px solid #c6c6c5;"/>
             <input ng-show='showAmountTo' type="text" id="country_from_amount" ng-name="country_from" placeholder="Amount" style="font-size: 17px; color: #444; border-bottom: 0px solid #c6c6c5;" />

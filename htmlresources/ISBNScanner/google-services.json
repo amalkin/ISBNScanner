@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "371146456853",
+    "firebase_url": "https://am-books.firebaseio.com",
+    "project_id": "am-books",
+    "storage_bucket": "am-books.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371146456853:android:9ff5a4e92e29b139",
+        "android_client_info": {
+          "package_name": "com.adobe.gss.mcscs.isbnscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371146456853-es2l7rdmf2ucb42oths57mbj0657ed5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN8IRC35tYl3WwhI7PZi8vQOEOu_TwtIs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,7 @@
 
 var scanapp = angular.module('starter', [
     'ionic', 
+    'ngAnimate',
     'baseControllers', 
     'cqHomeCtrl', 
     'cqMapCtrl', 
@@ -62,6 +63,7 @@ function AuthDataResolver(Auth) {
 AuthDataResolver.$inject = ['Auth'];
 
 function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
     $ionicConfigProvider.tabs.position('bottom');
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -69,13 +71,6 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
-    
-    .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'AppCtrl'
-    })
     
     
 
@@ -95,14 +90,27 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         }
     })
 
-    // setup an abstract state for the tabs directive
-    .state('tab', {
-        url: '/tab',
+
+
+    
+    .state('app', {
+        url: '/app',
         abstract: true,
-        templateUrl: 'templates/tabs.html'
+        templateUrl: 'templates/menu.html',
+        controller: 'AppCtrl'
     })
 
-    .state('tab.home', {
+    // setup an abstract state for the tabs directive
+    .state('app.tab', {
+        url: '/tab',
+        views: {
+            'menuContent' :{
+                templateUrl: "templates/tabs.html"
+            }
+        }
+    })
+
+    .state('app.tab.home', {
         url: '/home',
         views: {
             'tab-home': {
@@ -111,18 +119,46 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
             }
         }
     })
-
-    .state('tab.scan', {
-        url: '/scan',
+    
+    .state('app.tab.weather', {
+        url: '/weather',
         views: {
-            'tab-scan': {
-                templateUrl: 'templates/tab-scan.html',
-                controller: 'ISBNScanCtrl'
+            'tab-weather': {
+                templateUrl: 'templates/tab-weather.html',
+                controller: 'WeatherCtrl'
+            }
+        }
+    })
+    
+    .state('app.tab.tides', {
+        url: '/tides',
+        views: {
+            'tab-tides': {
+                templateUrl: 'templates/tab-tides.html',
+                controller: 'TidesCtrl'
             }
         }
     })
 
-    .state('tab.books', {
+    .state('app.tab.tides.now', {
+        url: "/now",
+        views: {
+            'tides-sub': {
+                templateUrl: "templates/tides-now.html"
+            }
+        }
+    })
+    
+    .state('app.tab.tides.week', {
+        url: "/week",
+        views: {
+            'tides-sub': {
+                templateUrl: "templates/tides-week.html"
+            }
+        }
+    })
+
+    .state('app.tab.books', {
         url: '/books',
         views: {
             'tab-books': {
@@ -132,7 +168,27 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
         }
     })
 
-    .state('tab.account', {
+    .state('app.tab.bookdetail', {
+        url: '/books/:isbn',
+        views: {
+            'tab-books': {
+                templateUrl: 'templates/tab-books-detail.html',
+                controller: 'BooksCtrl'
+            }
+        }
+    })
+
+    .state('app.tab.scan', {
+        url: '/scan',
+        views: {
+            'tab-scan': {
+                templateUrl: 'templates/tab-scan.html',
+                controller: 'ISBNScanCtrl'
+            }
+        }
+    })
+
+    .state('app.tab.account', {
         url: '/account',
         views: {
             'tab-account': {
@@ -141,26 +197,53 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
             }
         }
     })
+    
+    .state('app.tab.currencyconverter', {
+        url: '/currencyconverter',
+        views: {
+            'tab-currencyconverter': {
+                templateUrl: 'templates/tab-currencyconverter.html',
+                controller: 'CurrencyConverterCtrl'
+            }
+        }
+    })
+    
+    .state('app.tab.ble', {
+        url: '/ble',
+        views: {
+            'tab-ble': {
+                templateUrl: 'templates/tab-ble.html',
+                controller: 'BleCtrl'
+            }
+        }
+    })
 
-    .state('tab.search', {
+    .state('app.bledetail', {
+        url: '/bledetail/:deviceId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/tab-ble-detail.html',
+                controller: 'BLEDetailCtrl'
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+    .state('app.tab.search', {
         url: '/search',
         views: {
             'tab-map': {
                 templateUrl: 'templates/tab-search.html',
                 controller: 'SearchCtrl'
-            }
-        }
-    })
-    
-    
-    
-
-    .state('app.home', {
-        url: '/home',
-        views: {
-            'tab-map': {
-                templateUrl: 'templates/tab-home.html',
-                controller: 'HomeCtrl'
             }
         }
     })
@@ -171,26 +254,6 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
             'menuContent': {
                 templateUrl: 'templates/tab-map.html',
                 controller: 'MapCtrl'
-            }
-        }
-    })
-    
-    .state('app.preferences', {
-        url: '/preferences',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/tab-preferences.html',
-                controller: 'PreferencesCtrl'
-            }
-        }
-    })
-    
-    .state('app.currencyconverter', {
-        url: '/currencyconverter',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/tab-currencyconverter.html',
-                controller: 'CurrencyConverterCtrl'
             }
         }
     })
@@ -212,7 +275,7 @@ function ApplicationConfig($stateProvider, $urlRouterProvider, $ionicConfigProvi
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/dash');
+    $urlRouterProvider.otherwise('/app/tab/home');
 }
 
 

@@ -1,0 +1,32 @@
+<ion-view view-title="BLE">
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <!-- Toggle right side menu -->
+            <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    
+    <ion-content class="padding">
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="onRefresh()">
+        </ion-refresher>
+        
+        <ion-list>
+            <ion-item class="item-icon-right" ng-repeat="device in devices" type="item-text-wrap" href="#/app/bledetail/{{device.id}}">
+                <h2>{{device.name}}</h2>
+                <p>{{device.id}} &nbsp; RSSI: {{device.rssi}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    
+</ion-view>
