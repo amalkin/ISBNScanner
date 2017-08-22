@@ -19,13 +19,37 @@
         </div>
         
         
-        <div id="footerTargetMessage" ng-show="showTargetMessage">Footer - Just scroll...</div>
-
-        <div id="someone-purchased" class="customized fade-out" style="margin-left: 0px; display: block;">
-            <img src="https://cdn.shopify.com/s/files/1/1299/3113/products/DSC09466_small.png?v=1499160502">
-            <p>Jon in Stockholm, Sweden purchased a <a href="http://phonebibi.com/products/magic-toy-truck?variant=42676518726&amp;utm_source=fomo&amp;utm_medium=notification" target="_blank">Magic Toy Truck</a> <small></small></p>
-            <span id="fomo-close"></span>
+        <div id="footerTargetMessage" ng-show="showTargetMessage">
+            <div data-ng-show="showError" ng-class="{fade:doFade}" class="alert alert-danger">
+                <strong>New Purchase:</strong> {{purchasedUser}} {{purchaseMessage}}
+                {{purchasedProduct}}
+                <!-- <p>randomNumberTimer: {{randomNumberTimer}}</p> -->
+            </div>
         </div>
+
+        
+
+        <div ng-class="targetRefresh" id="someone-purchased" class="elementToFadeInAndOut">
+            <div class="list card">
+
+                <div class="item item-avatar">
+                    <img src="{{randomProductImage}}">
+                    <h2>{{randomProductName}}</h2>
+                    <p>2 minutes ago...</p>
+                </div>
+
+                <div class="item item-body">
+                    <img class="full-image" src="{{randomProductImage}}">
+                    <p>Just purchased by {{randomProductUser}} in {{randomProductLocation}}</p>
+                    <p>
+                        <a href="#" class="subdued">1 Like</a>
+                        <a href="#" class="subdued">5 Comments</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
 
         
     </ion-content>
@@ -33,39 +57,53 @@
 
 <style>
 
+.item-body {
+    overflow: auto;
+    padding: 5px;
+    text-overflow: inherit;
+    white-space: normal;
+}
 
 #footerTargetMessage {
     position: fixed;
     bottom: 40px;
-    width: 50%;
+    width: 90%;
 }
 
-#someone-purchased.fade-out {
-    opacity: 0;
-    animation-name: nFadeOut;
-    animation-duration: 1s;
-    animation-fill-mode: both;
+@-webkit-keyframes elementToFadeInAndOut {
+    0% {
+        background-color: Yellow;
+        opacity:1;
+    }
+
+    100% {
+        background-color: #777;
+        opacity:0;
+    }
 }
-#someone-purchased {
-    padding-right: 25px;
-}
-#someone-purchased {
-    background: #fff;
-    border: 0;
-    display: none;
-    border-radius: 0;
-    bottom: 20px;
-    left: 20px;
-    top: auto !important;
-    right: auto !important;
-    padding: 0;
+.elementToFadeInAndOut {
+    width: 200px;
+    height: 200px;
     position: fixed;
-    text-align: left;
-    width: auto;
-    z-index: 99999;
-    font-family: Raleway,sans-serif;
-    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
-    -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
-    box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
+    background: red;
+    top: 30%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    -webkit-animation-name: elementToFadeInAndOut;
+	-webkit-animation-duration: 10s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+@-webkit-keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 </style>
