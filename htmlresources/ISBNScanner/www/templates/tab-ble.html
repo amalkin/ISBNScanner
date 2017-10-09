@@ -22,8 +22,8 @@
         
         <ion-list>
             <ion-item class="item-icon-right" ng-repeat="device in devices" type="item-text-wrap" href="#/app/bledetail/{{device.id}}">
-                <h2>{{device.name}}</h2>
-                <p>{{device.id}} &nbsp; RSSI: {{device.rssi}}</p>
+                <h2>Name: {{device.name}}</h2>
+                <p>ID: {{device.id}} &nbsp;|&nbsp; RSSI: {{device.rssi}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
         </ion-list>

@@ -32,7 +32,7 @@
         
         <ion-list>
             <form name="formTest">
-                <formly-form model="scanpreferences.model" fields="scanpreferences.fields" form="scanpreferences.form" options="scanpreferences.options">
+                <formly-form model="scanpreferences.model" fields="scanpreferences.fields" form="scanpreferences.form" options="scanpreferences.options" style="width:100%">
 
                 </formly-form>
             </form>
@@ -63,11 +63,20 @@
                     <a class="item item-thumbnail-left" href="#">
                         <img id="resultsISBNImage" src="">
                         <div id="resultsISBN"></div>
+                        
                     </a>
 
                 </div>
                 
             </div>
+        </div>
+
+        <div ng-show='showNFC' class="list card">
+            <div class="item item-divider">Tag</div>
+            <div class="item item-body">
+                <div id="resultsNFC"></div>
+            </div>
+
         </div>
         
         

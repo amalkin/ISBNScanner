@@ -149,6 +149,7 @@ scanapp.controller('ISBNScanCtrl', function($scope, $rootScope, $q, PreferencesS
                     bookAuthor = obj.author_data[0].name;
                     bookIsbn13 = obj.isbn13;
 
+                    $scope.showNFC = false;
                     $scope.showBook = true;
 
                     console.log("[ISBNScanService.isbnScanConnect] "+bookTitle);
@@ -224,6 +225,58 @@ scanapp.controller('ISBNScanCtrl', function($scope, $rootScope, $q, PreferencesS
             }
         );
         
+        
+    }
+    
+    function startNFC() {
+        
+        console.log("[controllers.ScanCtrl] startNFC")
+
+        // nfc.addNdefListener(
+        //     function() {
+        //         console.log("Success. Found an NDEF formatted tag");
+        //     },
+        //     function() {
+        //         console.log("Success.");
+        //     },
+        //     function() {
+        //         console.log("Fail.");
+        //     }
+        // );
+
+        nfc.addMimeTypeListener(
+            'text/pg',
+            parseTag,
+          
+            function() {
+              console.log("Success.");
+            },
+            function() {
+              console.log("Fail.");
+            }
+        );
+
+
+    }
+
+    function parseTag(nfcEvent) {
+        console.log("[controllers.ScanCtrl] parseTag")
+
+        var records = nfcEvent.tagData;
+        var tag = nfcEvent.tag;
+
+        var payload = tag.ndefMessage[0]["payload"];
+        var payloadValue = nfc.bytesToString(payload);
+
+        console.log("[controllers.ScanCtrl] tag: "+JSON.stringify(nfcEvent.tag));
+        console.log("[controllers.ScanCtrl] payloadValue: "+payloadValue);
+
+        $scope.showBook = false;
+        $scope.showNFC = true;
+
+        p = document.createElement('p');
+        document.getElementById("resultsNFC").innerHTML = payloadValue;
+      
         
     }
     

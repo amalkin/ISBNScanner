@@ -34,15 +34,19 @@ angular.module('ngISBNService', [])
         console.log("[ISBNScanService._search]: "+isbnValue);
         
         try {
-            console.log('[ISBNScanService._search] Starting...');
-            
             var preferences = PreferencesService.getPreferences();
+
+            console.log('[ISBNScanService._search] Starting...');
+            console.log('[ISBNScanService._search] isbnAccessKey... '+preferences["isbnAccessKey"]);
+            console.log('[ISBNScanService._search] isbnURLJSON... '+preferences["isbnURLJSON"]);
+            console.log('[ISBNScanService._search] googleISBNUrl... '+preferences["googleISBNUrl"]);
+            
             var isbnAccessKey = preferences["isbnAccessKey"];
             var isbnURL = preferences["isbnURLJSON"];
             var googleISBNUrl = preferences["googleISBNUrl"];
             
             var finalISBNSearchURL = isbnURL.replace("+isbnAccessKey+",isbnAccessKey)+isbnValue;
-            //console.log("finalISBNSearchURL: "+finalISBNSearchURL);
+            console.log("finalISBNSearchURL: "+finalISBNSearchURL);
             
             $http.get(finalISBNSearchURL)
                 .success(

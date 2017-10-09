@@ -1,0 +1,9 @@
+{
+  "name": "ISBNScanner",
+  "app_id": "com.adobe.gss.mcscs.isbnscanner",
+  "type": "ionic1",
+  "integrations": {
+    "cordova": {}
+  },
+  "watchPatterns": []
+}

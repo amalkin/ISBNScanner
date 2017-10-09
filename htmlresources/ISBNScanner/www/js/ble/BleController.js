@@ -45,7 +45,7 @@ scanapp.controller('BleCtrl', function($scope, $http, PreferencesService, $ionic
 
     // pull to refresh
     $scope.onRefresh = function() {
-        BLE.scan().then(
+        BLE.scan([], 5).then(
             success, failure
         ).finally(
             function() {
@@ -55,7 +55,7 @@ scanapp.controller('BleCtrl', function($scope, $http, PreferencesService, $ionic
     }
 
     // initial scan
-    BLE.scan().then(success, failure);
+    BLE.scan([], 5).then(success, failure);
     
     
 })
